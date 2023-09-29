@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Registration Form</title>
+    <style>
+        /* CSS for styling the form */
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            display: flex;
+            justify-content: space-between;
+        }
+        .left-side {
+            width: 70%;
+            padding: 20px;
+            border: 1px solid #ccc;
+            margin: 10px;
+            background-color: aquamarine;
+        }
+        .right-side {
+            width: 28%;
+            padding: 20px;
+            border: 1px solid #ccc;
+            margin: 10px;
+            background-color: bisque;
+        }
+        .form-group {
+            margin-bottom: 10px;
+        }
+        .form-group label {
+            display: block;
+        }
+        .form-group input[type="text"], .form-group input[type="email"], .form-group input[type="url"] {
+            width: 50%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .form-group hr {
+            margin: 10px 0;
+        }
+        .form-group .radio-group {
+            display: flex;
+        }
+        .form-group .radio-group label {
+            margin-right: 10px;
+        }
+        .form-group .skills {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .form-group .skills label {
+            margin-right: 10px;
+        }
+        .form-group .image-upload {
+            text-align: center;
+            margin-top: 10px;
+        }
+        .form-group .image-upload img {
+            max-width: 100px;
+            max-height: 100px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .submit-button {
+            background-color: green;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+
+            font-size: 16px;
+        }    
+        .clear-button {
+            background-color: #f50707;
+            color: #333;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+        /* Additional CSS for student list on the right side */
+        .student-box {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .student-details {
+            flex: 1;
+        }
+        .student-details h3 {
+            margin-top: 0;
+        }
+        .student-image img {
+            max-width: 100px;
+            max-height: 100px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left-side">
+            <h2>Student Registration</h2>
+            <form id="registration-form">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="website">Website:</label>
+                    <input type="url" id="website" name="website" required>
+                </div>
+                <div class="form-group">
+                    <label for="image-link">Image Link:</label>
+                    <input type="url" id="image-link" name="image-link" required>
+                </div>
+                <br>
+                <div class="form-group">
+                    <label>Gender :</label>
+                    <div class="radio-group">
+                        <input type="radio" id="male" name="gender" value="Male" required>
+                        <label for="male">Male</label>
+                        <input type="radio" id="female" name="gender" value="Female" required>
+                        
+                        <label for="female">Female</label>
+                        
+                    </div>
+                </div>
+                <br>
+                <div class="form-group">
+                    <label>Skills:</label>
+                    <div class="skills">
+                        <input type="checkbox" id="java" name="skills" value="Java">
+                        <label for="java">Java</label><input type="checkbox" id="sql" name="skills" value="SQL">
+                        
+                        <label for="sql">SQL</label>
+                        <input type="checkbox" id="html" name="skills" value="HTML">
+                        <label for="html">HTML</label>
+                        
+                    </div>
+                </div>
+            
+                <button type="submit" class="submit-button">Submit</button>
+                <button type="button" class="clear-button" onclick="clearForm()">Clear</button>
+            </form>
+        </div>
+        <div class="right-side">
+            <h2>Registered Students</h2>
+            <div id="student-list"></div>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript to handle form submission and clearing the form
+        document.getElementById("registration-form").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            // Get form values
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const website = document.getElementById("website").value;
+            const imageLink = document.getElementById("image-link").value;
+            const gender = document.querySelector('input[name="gender"]:checked').value;
+            const skills = Array.from(document.querySelectorAll('input[name="skills"]:checked')).map(skill => skill.value);
+
+            // Create a student object
+            const student = {
+                name,
+                email,
+                website,
+                imageLink,
+                gender,
+                skills
+            };
+
+            // Add student to the list
+            addStudentToList(student);
+
+            // Clear the form
+            clearForm();
+        });
+
+        function addStudentToList(student) {
+            const studentList = document.getElementById("student-list");
+            const studentDiv = document.createElement("div");
+            studentDiv.className = "student-box";
+            studentDiv.innerHTML = `
+                <div class="student-details">
+                    <h3>${student.name}</h3>
+                    <p>Email: ${student.email}</p>
+                    <p>Website: ${student.website}</p>
+                    <p>Gender: ${student.gender}</p>
+                    <p>Skills: ${student.skills.join(", ")}</p>
+                </div>
+                <div class="student-image">
+                    <img src="${student.imageLink}" alt="${student.name}">
+                </div>
+            `;
+            studentList.appendChild(studentDiv);
+        }
+
+        function clearForm() {
+            document.getElementById("registration-form").reset();
+        }
+    </script>
+</body>
+</html>

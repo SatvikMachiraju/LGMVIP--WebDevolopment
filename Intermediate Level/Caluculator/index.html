@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: rgb(249, 249, 249);
+        }
+        .calculator {
+            width: 300px;
+            margin: 0 auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            background-color: #060606;
+            border-color: black;
+        }
+        .screen {
+            display: block;
+            width: 80%;
+            padding: 10px;
+            text-align: right;
+            font-size: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 5px;
+        }
+        .button {
+            padding: 10px;
+            text-align: center;
+            font-size: 18px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .buttoneq {
+            padding: 10px;
+            text-align: center;
+            font-size: 18px;
+            background-color: #08f914;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .buttonc {
+            padding: 10px;
+            text-align: center;
+            font-size: 18px;
+            background-color: #dc0606;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <div class="screen" id="display">0</div>
+        <div class="buttons">
+           
+            <button class="button" onclick="appendToDisplay('7')">7</button>
+            <button class="button" onclick="appendToDisplay('8')">8</button>
+            <button class="button" onclick="appendToDisplay('9')">9</button>
+            <button class="buttonc" onclick="clearDisplay()">C</button>
+            <button class="button" onclick="appendToDisplay('4')">4</button>
+            <button class="button" onclick="appendToDisplay('5')">5</button>
+            <button class="button" onclick="appendToDisplay('6')">6</button>
+            <button class="button" onclick="appendToDisplay('+')">+</button>
+            <button class="button" onclick="appendToDisplay('1')">1</button>
+            <button class="button" onclick="appendToDisplay('2')">2</button>
+            <button class="button" onclick="appendToDisplay('3')">3</button>
+            <button class="button" onclick="appendToDisplay('*')">*</button>
+            <button class="button" onclick="appendToDisplay('.')">.</button>
+            <button class="button" onclick="appendToDisplay('0')">0</button>
+            <button class="button" onclick="appendToDisplay('-')">-</button>
+            <button class="button" onclick="appendToDisplay('/')">/</button>
+            <button class="button" onclick="appendToDisplay('(')">(</button>
+            <button class="button" onclick="appendToDisplay(')')">)</button>
+            <button class="button" onclick="backspace()">←</button> 
+            <button class="buttoneq" onclick="calculateResult()">=</button>
+            
+        </div>
+    </div>
+
+    <script>
+        let displayValue = '';
+
+        function appendToDisplay(value) {
+            displayValue += value;
+            document.getElementById('display').innerText = displayValue;
+        }
+
+        function clearDisplay() {
+            displayValue = '';
+            document.getElementById('display').innerText = '0';
+        }
+
+        function calculateResult() {
+            try {
+                const result = eval(displayValue);
+                document.getElementById('display').innerText = result;
+                displayValue = result.toString();
+            } catch (error) {
+                document.getElementById('display').innerText = 'Error';
+                displayValue = '';
+            }
+        }
+        function backspace() {
+            displayValue = displayValue.slice(0, -1);
+            document.getElementById('display').innerText = displayValue;
+        }    
+    </script>
+</body>
+</html>
