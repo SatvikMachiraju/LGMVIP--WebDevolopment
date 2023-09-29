@@ -1,0 +1,35 @@
+/* UserCard.css */
+
+/* Style for the user card container */
+.user-card {
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    display: flex; /* Make user card display as columns */
+    flex-direction: column; /* Display user card content in a column */
+    align-items: center; /* Center content horizontally */
+  }
+  
+  /* Style for the user image */
+  .user-card img {
+    max-width: 100px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+  }
+  
+  /* Style for the user name */
+  .user-card h2 {
+    font-size: 18px;
+    margin: 0;
+  }
+  
+  /* Style for the user email */
+  .user-card p {
+    font-size: 14px;
+    color: #777;
+  }
+  
